@@ -55,11 +55,23 @@
                             <a class="nav-link" href="#">Return Policy</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-shopping-cart cart" data-toggle="tooltip" data-placement="bottom" data-original-title="Tooltip on bottom" class="red-tooltip" title="No Product in the Cart" aria-hidden="true"></i>
-                            </a>
-                        </li>
+                        {% with total_items=cart|length %} {% if total_items > 0 %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                                    <i class="fa fa-shopping-cart cart " data-toggle="tooltip" data-placement="bottom" data-original-title="Tooltip on bottom" class="red-tooltip" title="{{ total_items }} item{{ total_items|pluralize }},${{ cart.get_total_price }}" aria-hidden="true"></i>
+                                </a>
+                            </li>
+
+
+                            {% else %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fa fa-shopping-cart cart " data-toggle="tooltip" data-placement="bottom" data-original-title="Tooltip on bottom" class="red-tooltip" title="No Product in the Cart" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        {% endif %} {% endwith %}
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fa fa-user user" aria-hidden="true"></i>
@@ -123,7 +135,7 @@
                         </nav>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 mt-3 text-center">
-                        <p id="showproduct">Showing 1-12 of 48 results</p>
+                        <p id="showproduct">Showing {{ products.start_index }}-{{ products.end_index }} of {{ products.paginator.count }} results</p>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2 mt-3">
                         <select class="nice-select" name="price">

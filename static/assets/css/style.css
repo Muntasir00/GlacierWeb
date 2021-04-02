@@ -531,7 +531,14 @@ a.category {
 .navbar {
     padding-top: 0rem;
     padding-bottom: 0rem;
-    height: 50px
+}
+
+@media (min-width: 992px){
+    .navbar-expand-lg {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        height: 50px;
+    }
 }
 
 .bg-light {
@@ -543,7 +550,6 @@ a.category {
     font-weight: normal;
     text-transform: none;
     font-weight: bold;
-    /* margin-left: 135px; */
 }
 
 #BrandName:hover {

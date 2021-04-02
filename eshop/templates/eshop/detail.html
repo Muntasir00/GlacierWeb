@@ -50,12 +50,24 @@
                             <a class="nav-link" href="#">Return Policy</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-shopping-cart cart" data-toggle="tooltip" data-placement="bottom" data-original-title="Tooltip on bottom" class="red-tooltip" title="No Product in the Cart" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
+                        {% with total_items=cart|length %} {% if total_items > 0 %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                                    <i class="fa fa-shopping-cart cart " data-toggle="tooltip" data-placement="bottom" data-original-title="Tooltip on bottom" class="red-tooltip" title="{{ total_items }} item{{ total_items|pluralize }},${{ cart.get_total_price }}" aria-hidden="true"></i>
+                                </a>
+                            </li>
+
+
+                            {% else %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fa fa-shopping-cart cart " data-toggle="tooltip" data-placement="bottom" data-original-title="Tooltip on bottom" class="red-tooltip" title="No Product in the Cart" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            {% endif %} {% endwith %}
+                            <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fa fa-user user" aria-hidden="true"></i>
                             </a>
@@ -150,7 +162,7 @@
                                                 <select class="form-select">
                                                        <option selected>Size</option>
                                                        
-                                                        {% for c in color %}
+                                                        {% for c in size %}
                                                         <option value="{{ c }}">{{ c.size }}</option>
                                                         {% endfor %}
                                                    </select>
@@ -160,7 +172,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row mt-2">
+                               <!-- <div class="row mt-2">
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="div input-group d-flex mt-2">
                                             <button type="button" id="btnRemove" class="minus btn btn-default">
@@ -172,11 +184,20 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row mt-2">
-                                    <div class="col-lg-12">
-                                        <button class="btn btn-lg btn-default  add-to-cart">Add to cart</button>
-                                        <button class="btn btn-lg btn-default  buy-now">Buy Now</button>
+                                    <div class="col-lg-12 mt-2">
+
+                                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                        {{ cart_product_form }}
+                                        {% csrf_token %}
+                                        <br>
+                                        <input class="btn btn-lg btn-default add-to-cart mt-3" type="submit" value="Add to cart">
+                                        <button class="btn btn-lg btn-default  buy-now mt-3 ms-2">Buy Now</button>
+                                        </form>
+                                        <!-- <button class="btn btn-lg btn-default  add-to-cart">Add to cart</button> -->
+                                        
+
                                     </div>
                                 </div>
 

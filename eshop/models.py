@@ -30,8 +30,6 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     weight = models.IntegerField(blank=True)
-    #size = models.TextField(blank=True)
-    #color =models.TextField(blank=True)
 
     class Meta:
         ordering = ('name',)
@@ -44,15 +42,28 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("eshop:product_detail", args=[self.id, self.slug])
 
-
+#For posting differnt image alonside with different colour
 class PostImage(models.Model):
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    #title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='media/%y/%m/%d',blank=True)
-    size = models.CharField(max_length=20, blank=True)
-    color = models.CharField(max_length=20, blank=True)
     
+    def __str__(self):
+        return self.product.name
+
+#For size variant available
+class PostSize(models.Model):
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    size = models.CharField(max_length=20,blank=True)
 
     def __str__(self):
         return self.product.name
+
+#For Colour variant available
+class PostColor(models.Model):
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    color = models.CharField(max_length=20,blank=True)
+
+    def __str__(self):
+        return self.product.name
+
 

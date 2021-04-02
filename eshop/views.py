@@ -2,7 +2,8 @@ from django.shortcuts import render
 
 from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Category, Product, PostImage
+from .models import Category, Product, PostImage, PostColor, PostSize
+from cart.forms import CartAddProductForm
 
 #list allthe products or filter products by a given category
 def product_list(request, category_slug=None):
@@ -50,12 +51,13 @@ def product_detail(request, id, slug, category_slug=None):
     photos = PostImage.objects.filter(product=product)
     category = None
     categories = Category.objects.all()
-    color = PostImage.objects.filter(product=product)
-    size = PostImage.objects.filter(product=product)
+    color = PostColor.objects.filter(product=product)
+    size = PostSize.objects.filter(product=product)
+    cart_product_form = CartAddProductForm()
     #description = PostImage.objects.filter(product=product)
     #title = PostImage.objects.filter(product=product)
     return render(request, 'eshop/detail.html',
                                   {'product':product,'photos':photos,'color':color,'size':size,'category':category,
-                                'categories':categories })
+                                'categories':categories, 'cart_product_form':cart_product_form })
 
 
