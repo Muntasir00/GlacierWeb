@@ -19,7 +19,7 @@ def product_list(request, category_slug=None):
         paginator=Paginator(products,12)
         page=request.GET.get('page')
         paged_products=paginator.get_page(page)
-    return render(request,'eshop/index.html',
+    return render(request,'index.html',
                                 {'category':category,
                                 'categories':categories,
                                 'products':paged_products})
@@ -37,7 +37,7 @@ def all_product(request, category_slug=None):
         paginator=Paginator(products,12)
         page=request.GET.get('page')
         paged_products=paginator.get_page(page)
-    return render(request,'eshop/our_products.html',
+    return render(request,'our_products.html',
                                 {'category':category,
                                 'categories':categories,
                                 'products':paged_products})
@@ -56,7 +56,7 @@ def product_detail(request, id, slug, category_slug=None):
     cart_product_form = CartAddProductForm()
     #description = PostImage.objects.filter(product=product)
     #title = PostImage.objects.filter(product=product)
-    return render(request, 'eshop/detail.html',
+    return render(request, 'detail.html',
                                   {'product':product,'photos':photos,'color':color,'size':size,'category':category,
                                 'categories':categories, 'cart_product_form':cart_product_form })
 
