@@ -55,6 +55,16 @@
                             <a class="nav-link" href="#">Return Policy</a>
                         </li>
 
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'seller_dashboard' %}">Seller Dashboard</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'become_seller' %}">Become Seller</a>
+                        </li>
+                        {% endif %}
+
                         {% with total_items=cart|length %} {% if total_items > 0 %}
 
                             <li class="nav-item">

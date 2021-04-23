@@ -27,6 +27,9 @@ SECRET_KEY = 'y47rmvuvb@+&0b7v30a0&wk(b!-88zgx)_gg_artnyp9)je=cx'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'seller_dashboard'
+LOGOUT_REDIRECT_URL = 'eshop:product_list'
 
 
 # Application definition
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     #local apps
     'eshop.apps.EshopConfig',
     'cart.apps.CartConfig',
+    'seller.apps.SellerConfig',
 ]
 
 MIDDLEWARE = [

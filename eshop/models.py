@@ -2,6 +2,7 @@ from django.db import models
 
 from django.db import models
 from django.urls import reverse
+from seller.models import Seller
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True) 
@@ -21,6 +22,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category,related_name='products',on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller,related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     image = models.ImageField(upload_to='media/%y/%m/%d',blank=True)
