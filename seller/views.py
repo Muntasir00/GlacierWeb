@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from .forms import UserRegisterForm
 from django.shortcuts import render, redirect
 from .models import Seller
 from eshop.models import Product
@@ -8,18 +8,22 @@ from .forms import ProductForm
 from django.utils.text import slugify
 def become_seller(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
 
         if form.is_valid():
-            user = form.save()
-
-            login(request, user)
-            seller = Seller.objects.create(name=user.username, created_by=user)
+            form.save()
             return redirect('seller_dashboard')
+            # user = form.save()
+
+            # login(request, user)
+            # seller = Seller.objects.create(name=user.username, created_by=user)
+            
 
     else:
-        form = UserCreationForm()
+        form = UserRegisterForm()
     return render(request, 'become_seller.html',{'form':form})
+
+
 
 
 @login_required
