@@ -1,8 +1,8 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, ProfileEditForm
 from django.shortcuts import render, redirect
-from .models import Seller
+from .models import Seller, Profile
 from eshop.models import Product
 from .forms import ProductForm
 from django.utils.text import slugify
@@ -12,12 +12,7 @@ def become_seller(request):
 
         if form.is_valid():
             form.save()
-            return redirect('seller_dashboard')
-            # user = form.save()
-
-            # login(request, user)
-            # seller = Seller.objects.create(name=user.username, created_by=user)
-            
+            return redirect('seller_dashboard')  
 
     else:
         form = UserRegisterForm()
@@ -49,3 +44,16 @@ def add_product(request):
         form = ProductForm()
 
     return render(request, 'add_product.html', {'form':form})
+
+
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        profile_form = ProfileEditForm(instance=request.user.seller.profile, data=request.POST, files=request.FILES)
+        if profile_form.is_valid():
+            profile_form.save()
+
+    else:
+        profile_form = ProfileEditForm(instance=request.user.seller.profile)
+
+    return render(request, 'profile_edit.html', {'profile_form':profile_form})

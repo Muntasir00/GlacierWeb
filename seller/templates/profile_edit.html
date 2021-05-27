@@ -18,7 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" /> {#
     <link href="{% static 'css/base.css' %}" rel="stylesheet">#}
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/cart.css' %}">
-    <title>{% block title %} Seller Dashboard {% endblock %}</title>
+    <title>{% block title %} Become Seller {% endblock %}</title>
 
     <style>
 
@@ -69,42 +69,14 @@
 
 
     <!-- write body here-->
-    <h1 class="title"> Seller Dashboard</h1>
-    <h2 class="is-size-3 mb-4">My products</h2>
+    <h1>Update your account</h1>
+    <p>You can edit your account using the following form:</p>
+    <form method="post" enctype="multipart/form-data">
+        {{ profile_form.as_p }} {% csrf_token %}
+        <p><input type="submit" value="Save changes"></p>
+    </form>
 
-    <a href="{% url 'edit' %}"> Update your profile</a><br>
 
-    <a href="{% url 'add_product' %}" class="button is-dark is-uppercase mb-6"> ADD PRODUCTS</a>
-    <div class="container my-5 pb-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="table-responsive-lg">
-                    {% if products %}
-                    <table class="table table-striped"></table>
-                    <thead class="table-header">
-                        <tr>
-                            <th scope="col">Product name</th>
-                            <th scope="col">Price</th>
-                        </tr>
-                    </thead>
-                    <br>
-                    <tbody>
-                        {%for product in products %}
-                        <tr>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.price }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    {% else %}
-                    <p>You don't have any products</p>
-                    {% endif %}
-                    <hr>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a href="{% url 'logout' %}" class=" button is-danger is-uppercase">Logout</a>
 
     <section class="footer pt-5">
         <div class="container py-4">

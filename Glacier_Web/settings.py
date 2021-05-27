@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #third_party_apps
+    'multiselectfield',
+
     #local apps
     'eshop.apps.EshopConfig',
     'cart.apps.CartConfig',
